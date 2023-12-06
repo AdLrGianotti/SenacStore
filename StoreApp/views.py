@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core import send_email
 from StoreApp.models import Departamento, Produto
 from StoreApp.forms import ContatoForm
 
@@ -46,6 +47,25 @@ def institucional(request):
     return render(request, 'institucional.html')
 
 def contato (request):
+    
+    if request.method == "POST":
+        #recuperando os dados do formulário
+        nome = request.POST['nome']
+        telefone = request.POST['telefone']
+        assunto = request.POST['assunto']
+        mensagem = request.POST['mensagem']
+        remetente = request.POST['email']
+        destinatario = ['4782065.dpsp@gmail.com']
+        corpo = f"nome: {nome} \nTelefone: {telefone} \nMensagem: {mensagem}"
+
+        #fazer o envio do e-mail
+
+        send_mail (assunto, corpo, remetente,)
+
+
+
+
+
     #criando uma instancia do form de contato
     formulario = ContatoForm()
 
